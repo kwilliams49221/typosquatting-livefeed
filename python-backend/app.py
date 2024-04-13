@@ -22,6 +22,7 @@ def runPermutations(domains: list) -> list:
 
 def cleanupPermutations(data: list) -> list:
     dataToWrite = []
+    IPsInList = []
 
     for entry in data:
 
@@ -52,6 +53,9 @@ def cleanupPermutations(data: list) -> list:
         for record in aRecord:
             if record in originalIP:
                 needToContinue = 1
+            
+            if record in IPsInList:
+                needToContinue = 1
 
         for record in nsRecord:
             if record in originalNS:
@@ -66,6 +70,7 @@ def cleanupPermutations(data: list) -> list:
         
         domainComment = " # " + dnsName + " - " + nsRecords
         for record in aRecord:
+            IPsInList.append(record)
             dataToWrite.append(record + domainComment)
 
     return dataToWrite
@@ -99,7 +104,7 @@ def writeFeed(file: str, dataToWrite: list, protectedDomains: list) -> bool:
     feedFile.write("# Feed last refreshed on " + writeTime)
     feedFile.write("# Domains in this list: ")
     for line in protectedDomains:
-        feedFile.write("# - " + line + "\n")
+        feedFile.write("# - " + line)
         
     for line in dataToWrite:
         if isinstance(line, list):
@@ -125,6 +130,9 @@ if __name__ == '__main__':
     startTime = datetime.datetime.now()
     print(f"Feed refresh started at {startTime.hour}:{startTime.minute}:{startTime.second}")
 
+    print(f"Backing up current feed file...")
+    backupFeed(feedFile)
+
     print(f"Reading domain file at {domainsFile}")
     domains = getDomains(domainsFile)
 
@@ -133,9 +141,6 @@ if __name__ == '__main__':
 
     print(f"Cleaning up data...")
     dataToWrite = cleanupPermutations(permutations)
-
-    print(f"Backing up current feed file...")
-    backupFeed(feedFile)
 
     print(f"Writing to feed file at {feedFile}...")
     writeFeed(feedFile, dataToWrite, domains)
