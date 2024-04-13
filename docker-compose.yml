@@ -1,4 +1,4 @@
-name: TypoSquatting-LiveFeed
+name: typosquatting-livefeed
 services:
     typosquatting-livefeed-backend:
         stdin_open: true
