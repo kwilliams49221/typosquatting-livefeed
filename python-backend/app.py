@@ -13,7 +13,7 @@ def runPermutations(domains: list) -> list:
     dnstwistData = []
 
     for domain in domains:
-        twisted = dnstwist.run(domain=domain, registered=True, threads=40)
+        twisted = dnstwist.run(domain=domain, registered=True, threads=40, all=True)
 
         i = 0
         for data in twisted:
@@ -33,11 +33,11 @@ def cleanupPermutations(data: list) -> list:
             continue
         
         dnsName = entry['domain']
-        aRecord = entry['dns_a'][0]
-        nsRecord = ''
+        aRecord = entry['dns_a']
+        nsRecord = []
 
         if 'dns_ns' in entry:
-            nsRecord = entry['dns_ns'][0]
+            nsRecord = entry['dns_ns']
 
         if currentDomain == 1:
             originalIP = aRecord
@@ -45,16 +45,16 @@ def cleanupPermutations(data: list) -> list:
 
             continue
 
-        if aRecord == "0.0.0.0" or aRecord == "127.0.0.1":
+        if "0.0.0.0" in aRecord or "127.0.0.1" in aRecord:
             continue
 
-        if aRecord == '!ServFail':
+        if '!ServFail' in aRecord:
             continue
 
-        if aRecord == originalIP or nsRecord == originalNS:
+        if aRecord in originalIP or nsRecord in originalNS:
             continue
 
-        domainComment = "# " + dnsName + " - " + nsRecord
+        domainComment = "# " + dnsName + " - " + nsRecord[0]
         dataToWrite.append(domainComment)
         dataToWrite.append(aRecord)
 
