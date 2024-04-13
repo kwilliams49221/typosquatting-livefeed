@@ -97,7 +97,7 @@ def writeFeed(file: str, dataToWrite: list, protectedDomains: list) -> bool:
     feedFile = open(file, "a")
 
     feedFile.write("# Feed last refreshed on " + writeTime)
-    feedFile.wirte("# Domains in this list: ")
+    feedFile.write("# Domains in this list: ")
     for line in protectedDomains:
         feedFile.write("# - " + line + "\n")
         
