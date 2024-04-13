@@ -89,12 +89,16 @@ def backupFeed(file: str) -> bool:
     return True
 
 def writeFeed(file: str, dataToWrite: list) -> bool:
+    writeTime = datetime.datetime.now()
+
     clearFile = open(file, "w")
     clearFile.write("")
     clearFile.close()
 
     feedFile = open(file, "a")
     
+    feedFile.write("# Feed last refreshed on " + writeTime.isoformat)
+
     for line in dataToWrite:
         if isinstance(line, list):
             line = line[0]
