@@ -15,10 +15,8 @@ def runPermutations(domains: list) -> list:
     for domain in domains:
         twisted = dnstwist.run(domain=domain, registered=True, threads=80, all=True)
 
-        i = 0
         for data in twisted:
             dnstwistData.append(data)
-            i += 1
 
     return dnstwistData
 
