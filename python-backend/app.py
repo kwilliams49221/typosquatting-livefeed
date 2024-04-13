@@ -111,9 +111,9 @@ def writeFeed(file: str, dataToWrite: list, protectedDomains: list) -> bool:
 
     return True
 
-def getRunTime(starttime: datetime.time, endtime: datetime.time) -> float:
-    startDelta = datetime.timedelta(hours=starttime.hour, minutes=starttime.minute, seconds=starttime.second)
-    endDelta = datetime.timedelta(hours=endtime.hour, minutes=endtime.minute, seconds=endtime.second)
+def getRunTime(startTime: datetime.time, endTime: datetime.time) -> float:
+    startDelta = datetime.timedelta(hours=startTime.hour, minutes=startTime.minute, seconds=startTime.second)
+    endDelta = datetime.timedelta(hours=endTime.hour, minutes=endTime.minute, seconds=endTime.second)
 
     totalRunTime = endDelta - startDelta
 
