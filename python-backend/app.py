@@ -73,9 +73,8 @@ def cleanupPermutations(data: list) -> list:
         for record in nsRecord:
             nsRecords = nsRecords + record + " "
         
-        domainComment = "# " + dnsName + " - " + nsRecords
-        dataToWrite.append(domainComment)
-        dataToWrite.append(aRecord)
+        domainComment = " # " + dnsName + " - " + nsRecords
+        dataToWrite.append(aRecord + domainComment)
 
     return dataToWrite
 
