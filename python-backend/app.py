@@ -105,6 +105,8 @@ def writeFeed(file: str, dataToWrite: list, protectedDomains: list) -> bool:
     feedFile.write("# Domains in this list: ")
     for line in protectedDomains:
         feedFile.write("# - " + line)
+
+    feedFile.write("\n")
         
     for line in dataToWrite:
         if isinstance(line, list):
