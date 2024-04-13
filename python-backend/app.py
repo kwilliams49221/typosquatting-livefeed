@@ -24,10 +24,8 @@ def runPermutations(domains: list) -> list:
 
 def cleanupPermutations(data: list) -> list:
     dataToWrite = []
-    currentDomain = 0
 
     for entry in data:
-        currentDomain += 1
 
         needToContinue = 0
 
@@ -41,7 +39,7 @@ def cleanupPermutations(data: list) -> list:
         if 'dns_ns' in entry:
             nsRecord = entry['dns_ns']
 
-        if currentDomain == 1:
+        if entry['fuzzer'] == "*original":
             originalIP = aRecord
             originalNS = nsRecord
 
@@ -53,20 +51,15 @@ def cleanupPermutations(data: list) -> list:
         if '!ServFail' in aRecord:
             continue
         
-        if isinstance(aRecord, list):
-            for record in aRecord:
-                if record in originalIP:
-                    needToContinue = 1
+        for record in aRecord:
+            if record in originalIP:
+                needToContinue = 1
 
-        if isinstance(nsRecord, list):
-            for record in nsRecord:
-                if record in originalNS:
-                    needToContinue = 1
+        for record in nsRecord:
+            if record in originalNS:
+                needToContinue = 1
 
         if needToContinue == 1:
-            continue
-
-        if aRecord in originalIP or nsRecord in originalNS:
             continue
 
         nsRecords = ""
@@ -74,7 +67,8 @@ def cleanupPermutations(data: list) -> list:
             nsRecords = nsRecords + record + " "
         
         domainComment = " # " + dnsName + " - " + nsRecords
-        dataToWrite.append(aRecord + domainComment)
+        for record in aRecord:
+            dataToWrite.append(record + domainComment)
 
     return dataToWrite
 
