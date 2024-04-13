@@ -91,8 +91,8 @@ def writeFeed(file: str, dataToWrite: list) -> bool:
     return True
 
 if __name__ == '__main__':
-    domainsFile = "conf/small-domains.txt"
-    feedFile = "feed/feed.txt"
+    domainsFile = "/root/domains.txt"
+    feedFile = "/root/feed/feed.txt"
 
     print(f"Reading domain file at {domainsFile}")
     domains = getDomains(domainsFile)
