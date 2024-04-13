@@ -13,7 +13,7 @@ def runPermutations(domains: list) -> list:
     dnstwistData = []
 
     for domain in domains:
-        twisted = dnstwist.run(domain=domain, registered=True, threads=40, all=True)
+        twisted = dnstwist.run(domain=domain, registered=True, threads=80, all=True)
 
         i = 0
         for data in twisted:
