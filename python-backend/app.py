@@ -54,7 +54,11 @@ def cleanupPermutations(data: list) -> list:
         if aRecord in originalIP or nsRecord in originalNS:
             continue
 
-        domainComment = "# " + dnsName + " - " + nsRecord[0]
+        nsRecords = ""
+        for record in nsRecord:
+            nsRecords = nsRecords + " " + record
+        
+        domainComment = "# " + dnsName + " - " + nsRecords
         dataToWrite.append(domainComment)
         dataToWrite.append(aRecord)
 
@@ -91,7 +95,7 @@ def writeFeed(file: str, dataToWrite: list) -> bool:
     return True
 
 if __name__ == '__main__':
-    domainsFile = "/root/domains.txt"
+    domainsFile = "/root/conf/domains.txt"
     feedFile = "/root/feed/feed.txt"
 
     print(f"Reading domain file at {domainsFile}")
