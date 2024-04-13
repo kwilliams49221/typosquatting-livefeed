@@ -104,9 +104,20 @@ def writeFeed(file: str, dataToWrite: list) -> bool:
 
     return True
 
+def getRunTime(starttime: datetime.time, endtime: datetime.time) -> float:
+    startDelta = datetime.timedelta(hours=starttime.hour, minutes=starttime.minute, seconds=starttime.second)
+    endDelta = datetime.timedelta(hours=endtime.hour, minutes=endtime.minute, seconds=endtime.second)
+
+    totalRunTime = endDelta - startDelta
+
+    return totalRunTime
+
 if __name__ == '__main__':
     domainsFile = "/root/conf/domains.txt"
     feedFile = "/root/feed/feed.txt"
+
+    startTime = datetime.datetime.now()
+    print(f"Feed refresh started at {startTime.hour}:{startTime.minute}:{startTime.second}")
 
     print(f"Reading domain file at {domainsFile}")
     domains = getDomains(domainsFile)
@@ -123,6 +134,8 @@ if __name__ == '__main__':
     print(f"Writing to feed file at {feedFile}...")
     writeFeed(feedFile, dataToWrite)
 
-    print(f"Complete.")
+    endTime = datetime.datetime.now()
+    totalRunTime = getRunTime(startTime, endTime)
+    print(f"Feed refresh completed. Total runtime: {totalRunTime}")
 
     sys.exit(0)
