@@ -29,6 +29,8 @@ def cleanupPermutations(data: list) -> list:
     for entry in data:
         currentDomain += 1
 
+        needToContinue = 0
+
         if not 'dns_a' in entry:
             continue
         
@@ -50,13 +52,26 @@ def cleanupPermutations(data: list) -> list:
 
         if '!ServFail' in aRecord:
             continue
+        
+        if isinstance(aRecord, list):
+            for record in aRecord:
+                if record in originalIP:
+                    needToContinue = 1
+
+        if isinstance(nsRecord, list):
+            for record in nsRecord:
+                if record in originalNS:
+                    needToContinue = 1
+
+        if needToContinue == 1:
+            continue
 
         if aRecord in originalIP or nsRecord in originalNS:
             continue
 
         nsRecords = ""
         for record in nsRecord:
-            nsRecords = nsRecords + " " + record
+            nsRecords = nsRecords + record + " "
         
         domainComment = "# " + dnsName + " - " + nsRecords
         dataToWrite.append(domainComment)
@@ -88,6 +103,8 @@ def writeFeed(file: str, dataToWrite: list) -> bool:
     feedFile = open(file, "a")
     
     for line in dataToWrite:
+        if isinstance(line, list):
+            line = line[0]
         feedFile.write(line + "\n")
 
     feedFile.close()
