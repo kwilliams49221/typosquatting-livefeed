@@ -88,7 +88,7 @@ def backupFeed(file: str) -> bool:
 
     return True
 
-def writeFeed(file: str, dataToWrite: list) -> bool:
+def writeFeed(file: str, dataToWrite: list, protectedDomains: list) -> bool:
     writeTime = datetime.datetime.now()
 
     clearFile = open(file, "w")
@@ -96,9 +96,12 @@ def writeFeed(file: str, dataToWrite: list) -> bool:
     clearFile.close()
 
     feedFile = open(file, "a")
-    
-    feedFile.write("# Feed last refreshed on " + writeTime.isoformat)
 
+    feedFile.write("# Feed last refreshed on " + writeTime.isoformat)
+    feedFile.wirte("# Domains in this list: ")
+    for line in protectedDomains:
+        feedFile.write("# - " + line + "\n")
+        
     for line in dataToWrite:
         if isinstance(line, list):
             line = line[0]
@@ -136,7 +139,7 @@ if __name__ == '__main__':
     backupFeed(feedFile)
 
     print(f"Writing to feed file at {feedFile}...")
-    writeFeed(feedFile, dataToWrite)
+    writeFeed(feedFile, dataToWrite, domains)
 
     endTime = datetime.datetime.now()
     totalRunTime = getRunTime(startTime, endTime)
