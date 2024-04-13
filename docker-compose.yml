@@ -1,0 +1,19 @@
+name: TypoSquatting-LiveFeed
+services:
+    typosquatting-livefeed-backend:
+        stdin_open: true
+        tty: true
+        container_name: typosquatting-livefeed-backend
+        volumes:
+            - ./feed:/root/feed
+            - ./python-backend/conf:/root/conf
+        image: typosquatting-livefeed-backend
+    typosquatting-livefeed-frontend:
+        stdin_open: true
+        tty: true
+        ports:
+            - 8000:80
+        container_name: typosquatting-livefeed-frontend
+        volumes:
+            - ./feed:/usr/share/nginx/html
+        image: typosquatting-livefeed-frontend
