@@ -1,3 +1,0 @@
-dnstwist
-dnspython
-docker-py
