@@ -6,7 +6,7 @@ services:
         container_name: typosquatting-livefeed-backend
         volumes:
             - ./feed:/root/feed
-            - ./python-backend/conf:/root/conf
+            - ./conf:/root/conf
         image: gatheringrays/typosquatting-livefeed:backend
     typosquatting-livefeed-frontend:
         stdin_open: true
