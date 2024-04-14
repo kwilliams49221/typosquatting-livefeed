@@ -7,7 +7,7 @@ services:
         volumes:
             - ./feed:/root/feed
             - ./python-backend/conf:/root/conf
-        image: typosquatting-livefeed-backend
+        image: typosquatting-livefeed:backend
     typosquatting-livefeed-frontend:
         stdin_open: true
         tty: true
@@ -16,4 +16,4 @@ services:
         container_name: typosquatting-livefeed-frontend
         volumes:
             - ./feed:/usr/share/nginx/html
-        image: typosquatting-livefeed-frontend
+        image: typosquatting-livefeed:frontend
