@@ -13,7 +13,7 @@ services:
         tty: true
         ports:
             - 8000:80
-        container_name: gatheringrays/typosquatting-livefeed-frontend
+        container_name: gatheringrays/typosquatting-livefeed:frontend
         volumes:
             - ./feed:/usr/share/nginx/html
         image: typosquatting-livefeed:frontend
